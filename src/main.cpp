@@ -1,4 +1,3 @@
-
 #define WIN32_MEAN_AND_LEAN
 #define NOMINMAX
 
@@ -31,7 +30,6 @@ struct editor_t {
     resource_handle_t<shader_t> shader;
     std::vector<uniform_variable_t> uniform_variables;
 };
-
 
 int main(int argc, char** argv) {
     window_t window;
@@ -98,9 +96,6 @@ int main(int argc, char** argv) {
         /////////////////////////////
 
         /////////////////////////////
-        // Update
-
-        /////////////////////////////
         // Render
 
         if (editor.shader.valid()) {
@@ -126,11 +121,8 @@ int main(int argc, char** argv) {
                 break;
         }
 
-
         /////////////////////////////
         // UI
-
-   
 
         if (editor.shader.valid()) {
             ImGui::Begin("Shader Editor");
@@ -151,7 +143,6 @@ int main(int argc, char** argv) {
                     ImGui::Text("Uniforms");
                     ImGui::Separator();
                     editor.shader.get().uniform_edit(editor.uniform_variables);
-
                 }
 
             ImGui::End();
