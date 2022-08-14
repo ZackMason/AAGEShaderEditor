@@ -42,7 +42,13 @@ int main(int argc, char** argv) {
     window.set_title("AAGE Shader Editor");
     
     editor_t editor;
-    editor.asset_loader.asset_dir = GAME_ASSETS_PATH;
+
+    if (argc < 2) {
+        editor.asset_loader.asset_dir = GAME_ASSETS_PATH;
+    } else {
+        editor.asset_loader.asset_dir = argv[1];
+        logger_t::info(fmt::format("Asset Path set to \'{}\'", editor.asset_loader.asset_dir));
+    }
 
     window.set_event_callback(
         [&editor, &window](event_i& event) {
@@ -133,10 +139,19 @@ int main(int argc, char** argv) {
                     ImGui::Text("Drag a fragment shader onto\nthe window to load it");                    
                 } else {
                     ImGui::Text(fmt::format("Shader name: {}", editor.shader.get().name).c_str());
+
+                    ImGui::SameLine();
+                    if (ImGui::Button("Reload shader")) {
+                        // kind of a hack
+                        key_event_t event{GLFW_KEY_R, 0, 0};
+                        event.key = GLFW_KEY_R;
+                        window.event_callback(event);
+                    }
                     
                     ImGui::Text("Uniforms");
                     ImGui::Separator();
                     editor.shader.get().uniform_edit(editor.uniform_variables);
+
                 }
 
             ImGui::End();
