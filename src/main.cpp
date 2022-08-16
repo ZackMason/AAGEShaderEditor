@@ -37,6 +37,7 @@ int main(int argc, char** argv) {
     window.height = 480;
 
     window.open_window();
+    window.make_imgui_context();
     window.set_title("AAGE Shader Editor");
     
     editor_t editor;
@@ -88,9 +89,7 @@ int main(int argc, char** argv) {
     });
     
     while(!window.should_close()) {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+        window.imgui_new_frame();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         /////////////////////////////
@@ -148,8 +147,7 @@ int main(int argc, char** argv) {
             ImGui::End();
         }
 
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); 
+        window.imgui_render();
         /////////////////////////////
         window.swap_buffers();
         window.poll_events();
